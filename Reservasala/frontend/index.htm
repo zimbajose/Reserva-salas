@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="./style.css">
+  <title>Teste Trabsom</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<script src="script.js"></script>
+
+<body class="vh-100 d-flex align-items-center">
+  <div class="container p-5">
+    <div class="row justify-content-center align-items-center">
+      <div class="col text-center">
+        <h1 class="title fw-bolder">Alugação de Ambiente</h1>
+
+        <div class="form-group mb-3">
+          <label for="primeiroNumero" class="form-label fs-5">Selecione a sala que deseja alugar</label>
+          <select class="form-select" aria-label="Default select example">
+            <option selected>Selecione a Sala</option>
+
+          </select>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="primeiroNumero" class="form-label fs-5">Selecione o dia da semana</label>
+          <select id = "dayselect" class="form-select" aria-label="Default select example">
+            <option selected>Selecione o dia da Semana</option>
+            <option value="1">Segunda</option>
+            <option value="2">Terça</option>
+            <option value="3">Quarta</option>
+            <option value="4">Quinta</option>
+            <option value="5">Sexta</option>
+            <option value="6">Sabado</option>
+            <option value="7">Domingo</option>
+          </select>
+        </div>
+        <div class="form-group mb-3">
+          <label for="primeiroNumero" class="form-label fs-5">Selecione o Horário da Locação</label>
+          <select id = "periodselect" class="form-select" aria-label="Default select example">
+            <option selected>Selecione o periodo do Dia</option>
+            <option value="1">Manhã</option>
+            <option value="2">Tarde</option>
+            <option value="3">Noite</option>
+          </select>
+        </div>
+        <button id="btnLimpar" type="button" class="btn btn-outline-dark btn-lg px-5 mt-3">Limpar</button>
+        <button onclick="submit()" id="btnVerificar" type="button" class="btn btn-dark btn-lg px-5 mt-3">Verificar</button>
+
+        <p id="txtResultado" class="fs-3 mt-5"></p>
+      </div>
+      <div id="historico" class="d-none col-3 flex-column text-center"></div>
+    </div>
+  </div>
+</body>
+
+</html>
