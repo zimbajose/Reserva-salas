@@ -15,17 +15,16 @@ def check_available():
     #Dados com o nome da sala, e o dia que se deseja checar a disponibilidade
     query_data = request.form['querydata']
     query = json.loads(query_data)
-
     #Verifica se a sala está disponivel retorna 3 se sala não encontrada, 2 se indisponivel, 1 se ocupada e 0 se disponivel
     for room in data:
-        if(room.name == query["name"]):
-            appointment = room.appointments[int(query["day"])]
-            if(appointment[query["period"]]==0):
-                return 0
-            elif(appointment[query["period"]]==2):
-                return 2
-            return 1
-    return 3
+        if(room["name"] == query["name"]):
+            appointment = room["appointments"][int(query["day"])]
+            if(appointment[query["period"]]=='0'):
+                return json.dumps(0)
+            elif(appointment[query["period"]]=='2'):
+                return json.dumps(2)
+            return json.dumps(1)
+    return json.dumps(3)
 
 # retorna 3 caso não encontre a sala
 @app.route('/getavailabledays',methods=['POST'])
@@ -35,7 +34,7 @@ def get_available_days():
     room_name = request.form["name"]
     found_room = None
     for room in data:
-        if(room.name==room_name):
+        if(room["name"]==room_name):
             found_room = room
             break
     if(found_room==None):
@@ -55,7 +54,7 @@ def get_available_rooms():
         for day in days:
             appointment = room[int(day["day"])]
             #Verifica se a sala está disponivel em algum dos periodos
-            if(appointment["morning"]==0 or appointment["evening"]==0 or appointment==0):
+            if(appointment["morning"]=='0' or appointment["evening"]=='0' or appointment=='0'):
                 rooms.append(room)
                 break
     return json.dumps(rooms)
@@ -88,16 +87,16 @@ def reserve_room():
     query_raw = request.form["query"]
     query = json.load(query_raw)
     for room in data:
-        if(room.name == query["name"]):
-            appointment = room.appointments[int(query["day"])]
-            if(appointment[query["period"]]==0):
+        if(room["name"] == query["name"]):
+            appointment = room["appointments"][int(query["day"])]
+            if(appointment[query["period"]]=='0'):
                 appointment[query["period"]] =1
                 write_room_file(data,global_url)
-                return 0
-            elif(appointment[query["period"]]==2):
-                return 2
-            return 1
-    return 3 
+                return json.dumps(0)
+            elif(appointment[query["period"]]=='2'):
+                return json.dumps(2)
+            return json.dumps(1)
+    return json.dumps(3) 
 
 #Retorna 0 caso cancele a reserva com sucesso, 1 caso a sala não tenha sido reservada, e 2 caso a sala não esteja indisponivel, e 3 caso a sala não tenha sido encontrada
 @app.route("/unreserveroom")
@@ -107,14 +106,14 @@ def cancel_room_reservation():
     query_raw = request.form["query"]
     query = json.load(query_raw)
     for room in data:
-        if(room.name == query["name"]):
-            appointment = room.appointments[int(query["day"])]
-            if(appointment[query["period"]]==0):
-                return 1
-            elif(appointment[query["period"]]==2):
-                return 2
+        if(room["name"] == query["name"]):
+            appointment = room["appointments"][int(query["day"])]
+            if(appointment[query["period"]]=='0'):
+                return json.dumps(1)
+            elif(appointment[query["period"]]=='2'):
+                return json.dumps(2)
             appointment[query["period"]] =0
             write_room_file(data,global_url)
-            return 0
-    return 3 
+            return json.dumps(0)
+    return json.dumps(3)
 

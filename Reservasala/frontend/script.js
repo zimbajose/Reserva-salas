@@ -1,5 +1,5 @@
-var daySelect = $("#dayselect")
-var periodSelect = $("#periodselect");
+var daySelect = document.getElementById("dayselect")
+var periodSelect = document.getElementById("periodselect");
 var roomSelect = document.getElementById("roomselect");
 
 //Coloca os dados no select
@@ -28,6 +28,48 @@ $.ajax({
 });
 
 
-function submit(){
+const notifyAvailable = function(response){
+    switch(response){
+        case '0':
+            $.notify("Sala disponivel");
+            break;
+        case '1':
+            $.notify("Sala ocupada");
+            break;
+        case '2':
+            $.notify("Sala não disponivel nesse horario");
+            break;
+        case '3':
+            $.notify("Sala não encontrada");
+        default:
+            console.log("bruh")
+    }
+}
 
+function submit(){
+    //Obtem os dados dos formularios
+    let room = roomSelect.options[roomSelect.selectedIndex].value;
+    let period = periodSelect.options[periodSelect.selectedIndex].value;
+    let day = daySelect.options[daySelect.selectedIndex].value;
+    let data = {
+        "name":room,
+        "period":period,
+        "day":day
+    }
+    data = JSON.stringify(data);
+    //Manda o request
+    $.ajax({
+        type: 'POST',
+        url: 'http://127.0.0.1:5000/checkavailable',
+        //contentType: 'application/json; charset=utf-8',
+        data: {
+          "querydata": data
+        },
+        cache: false,
+        crossDomain: true,
+        success: notifyAvailable,
+        error: function(response){
+          $.notify("Erro ao checar os dados","error");
+        }
+    });
 }
