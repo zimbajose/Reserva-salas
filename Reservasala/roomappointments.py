@@ -1,12 +1,15 @@
 from flask import Flask
 from flask import request
+from flask_cors import CORS, cross_origin
 from fileutil import read_room_file, write_room_file
 import json
 global_url = "salas.txt"
 app = Flask(__name__)
-
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/checkavailable',methods = ['POST'])
+@cross_origin()
 def check_available():
     data = read_room_file(global_url)
     #Dados com o nome da sala, e o dia que se deseja checar a disponibilidade
@@ -26,6 +29,7 @@ def check_available():
 
 # retorna 3 caso não encontre a sala
 @app.route('/getavailabledays',methods=['POST'])
+@cross_origin()
 def get_available_days():
     data = read_room_file(global_url)
     room_name = request.form["name"]
@@ -40,6 +44,7 @@ def get_available_days():
 
 #Obtem um vetor com todas as salas disponiveis nos dias enviados
 @app.route("/getavailablerooms",methods=['POST'])
+@cross_origin()
 def get_available_rooms():
     data = read_room_file(global_url)
     days_raw = request.form["days"]
@@ -57,6 +62,7 @@ def get_available_rooms():
 
 #Obtem uma lista com todas as salas
 @app.route("/getroomnames",methods=['POST'])
+@cross_origin()
 def get_room_names():
     data = read_room_file(global_url)
     names = []
@@ -66,6 +72,7 @@ def get_room_names():
 
 #Retorna reservas de uma sala x
 @app.route("/getreservation")
+@cross_origin()
 def get_reservations():
     data = read_room_file(global_url)
     name = request.form["name"]
@@ -75,6 +82,7 @@ def get_reservations():
 
 #Reserva uma sala, retorna 0 em sucesso, 1 em caso de sala reservada, e 2 em caso de sala ocupada, retorna 3 caso nome da sala seja inexistente
 @app.route("/reserveroom")
+@cross_origin()
 def reserve_room():
     data = read_room_file(global_url)
     query_raw = request.form["query"]
@@ -93,6 +101,7 @@ def reserve_room():
 
 #Retorna 0 caso cancele a reserva com sucesso, 1 caso a sala não tenha sido reservada, e 2 caso a sala não esteja indisponivel, e 3 caso a sala não tenha sido encontrada
 @app.route("/unreserveroom")
+@cross_origin()
 def cancel_room_reservation():
     data = read_room_file(global_url)
     query_raw = request.form["query"]

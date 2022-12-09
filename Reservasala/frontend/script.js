@@ -13,12 +13,13 @@ var f = function(response){
 //Requisicao ajax para obter os dados de sala
 $.ajax({
     type: 'POST',
-    url: '127.0.0.1:5000/getroomnames',
+    url: 'http://127.0.0.1:5000/getroomnames',
     contentType: 'application/json; charset=utf-8',
-    dataType: 'json', //**** REMOVE THIS LINE ****//
     cache: false,
+    crossDomain: true,
     success: f,
     error: function(response){
-        console.log(response)
+        console.log("dk rap");
+        console.log(response);
     }
 });
