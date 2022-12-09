@@ -32,6 +32,12 @@ const whichPokemon = function(response){
     $.notify("Você pode encontrar nesse dia um "+response.name,"info")
 }
 
+const howIsWeather = function(response){
+    if(response.clima=='chuva'){
+        $.notify("vai chover!","warn")
+    }
+}
+
 const notifyAvailable = function(response){
     switch(response){
         case '0':
@@ -61,6 +67,19 @@ const notifyAvailable = function(response){
         error: function(response){
         }
     });
+
+    //Clima do dia
+    $.ajax({
+        type: 'GET',
+        url:'127.0.0.1:5000/tempo/lages',
+        //contentType: 'application/json; charset=utf-8',
+        cache: false,
+        crossDomain: true,
+        success: howIsWeather,
+        error: function(response){
+        }
+    });
+
 }
 
 function submit(){
