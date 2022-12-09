@@ -55,6 +55,15 @@ def get_available_rooms():
                 break
     return json.dumps(rooms)
 
+#Obtem uma lista com todas as salas
+@app.route("/getroomnames",methods=['POST'])
+def get_room_names():
+    data = read_room_file(global_url)
+    names = []
+    for room in data:
+        names.append(room["name"])
+    return json.dumps(names)
+
 #Retorna reservas de uma sala x
 @app.route("/getreservation")
 def get_reservations():
