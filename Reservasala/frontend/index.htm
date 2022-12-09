@@ -46,7 +46,21 @@
             <option value="night">Noite</option>
           </select>
         </div>
-        <button id="btnLimpar" type="button" class="btn btn-outline-dark btn-lg px-5 mt-3">Limpar</button>
+        <button onclick="submit()" id="btnVerificar" type="button" class="btn btn-dark btn-lg px-5 mt-3">Verificar</button>
+
+        <p id="txtResultado" class="fs-3 mt-5"></p>
+      </div>
+      <div id="historico" class="d-none col-3 flex-column text-center"></div>
+    </div>
+    <div class="row justify-content-center align-items-center">
+      <div class="col text-center">
+        <h1 class="title fw-bolder">Verificação de Pokemon</h1>
+
+        <div class="form-group mb-3">
+          <label for="primeiroNumero" class="form-label fs-5">Digite o nome do Pokemon ou a sua numeração</label>
+          <input type="text" class="form-control" placeholder="Ex:. Pikachu" aria-label="Recipient's username" aria-describedby="button-addon2">
+        </div>
+
         <button onclick="submit()" id="btnVerificar" type="button" class="btn btn-dark btn-lg px-5 mt-3">Verificar</button>
 
         <p id="txtResultado" class="fs-3 mt-5"></p>
