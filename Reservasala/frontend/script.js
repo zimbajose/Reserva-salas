@@ -28,22 +28,39 @@ $.ajax({
 });
 
 
+const whichPokemon = function(response){
+    $.notify("Você pode encontrar nesse dia um "+response.name,"info")
+}
+
 const notifyAvailable = function(response){
     switch(response){
         case '0':
-            $.notify("Sala disponivel");
+            $.notify("Sala disponivel","success");
             break;
         case '1':
-            $.notify("Sala ocupada");
+            $.notify("Sala ocupada","warn");
             break;
         case '2':
-            $.notify("Sala não disponivel nesse horario");
+            $.notify("Sala não disponivel nesse horario","warn");
             break;
         case '3':
             $.notify("Sala não encontrada");
         default:
             console.log("bruh")
     }
+    let url ='https://pokeapi.co/api/v2/pokemon/'+(daySelect.selectedIndex+1)+""+(periodSelect.selectedIndex+1)+(response);
+    console.log(url);
+    //Pokemon sei la
+    $.ajax({
+        type: 'GET',
+        url:url,
+        //contentType: 'application/json; charset=utf-8',
+        cache: false,
+        crossDomain: true,
+        success: whichPokemon,
+        error: function(response){
+        }
+    });
 }
 
 function submit(){
