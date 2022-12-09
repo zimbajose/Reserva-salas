@@ -1,19 +1,16 @@
 var daySelect = $("#dayselect")
 var periodSelect = $("#periodselect");
-var roomSelect = $("#roomselect");
-
-function submit(){
-
-}
+var roomSelect = document.getElementById("roomselect");
 
 //Coloca os dados no select
 var f = function(response){
     response = JSON.parse(response);
     console.log(roomSelect);
     response.forEach(function(option){
-        roomSelect.append($("<option></option>")
-        .attr("value",option).text(option)
-        );
+       let opt = document.createElement('option');
+       opt.value = option;
+       opt.innerHTML = option;
+       roomSelect.appendChild(opt);
     });
 }
 //Requisicao ajax para obter os dados de sala
@@ -29,3 +26,8 @@ $.ajax({
         console.log(response);
     }
 });
+
+
+function submit(){
+
+}
