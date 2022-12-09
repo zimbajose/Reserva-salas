@@ -8,7 +8,13 @@ function submit(){
 
 //Coloca os dados no select
 var f = function(response){
-    console.log(response);
+    response = JSON.parse(response);
+    console.log(roomSelect);
+    response.forEach(function(option){
+        roomSelect.append($("<option></option>")
+        .attr("value",option).text(option)
+        );
+    });
 }
 //Requisicao ajax para obter os dados de sala
 $.ajax({
